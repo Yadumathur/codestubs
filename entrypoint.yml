@@ -1,0 +1,28 @@
+ meta:
+    entry_point: "n/a"
+  {%- if concord.meta is defined %}
+    {%- for i in concord.meta %}
+    {{ i }}: "n/a"
+    {%- endfor -%}
+  {%- endif %}
+  arguments:
+    githubParams:
+      apiUrl: https://github/api/v3
+      accessToken: ${crypto.exportAsString('adgroup', 'token', '')}
+      org: {{ project.git_org }}
+      repo: {{ project.git_repo }}
+
+    repoBranchOrTag: {{ project.version }}
+
+    DL: "{{yourdl}}"
+    NotificationChannel: {{yourslackchannel}}
+    AlertChannel: {{alertsslackchannel}}
+
+    tfe_token: "{{ terraform.tfe_token }}"
+    tfe_hostname: "{{ terraform.tfe_hostname }}"
+    tfe_base_url: "https://${tfe_hostname}/api/v2"
+    tfe_org: "{{ terraform.tfe_org }}"
+    tfe_version: "{{ terraform.tfe_version }}"
+    tfe_prod_hostname: "terraform-prod-api-endpoint.cloud.wal-mart.com"
+    tf_source: "http://${tfe_prod_hostname}:8080/terraform-bundle_${tfe_version}_linux_amd64.zip"
+    pushgateway_url: "{{ concord.pushgateway_url }}"
